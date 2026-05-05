@@ -1,0 +1,40 @@
+# Name of your workflow
+name: Suman DevOps - First Pipeline
+
+# When should this run?
+on:
+  push:
+    branches: [ main ]        # Runs when you push to main
+  pull_request:
+    branches: [ main ]        # Runs when you raise a PR
+
+# What jobs to run?
+jobs:
+
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest    # GitHub provides this free Linux machine
+
+    steps:
+
+      # Step 1: Download your code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Print a hello message
+      - name: Hello from Suman DevOps
+        run: echo "Hello! Pipeline is running successfully!"
+
+      # Step 3: Show current folder and files
+      - name: Show project files
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Files in repo:"
+          ls -la
+
+      # Step 4: Print date and time
+      - name: Show build time
+        run: date
+
+        ## Rerun the Pipeline
