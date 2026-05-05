@@ -1,36 +1,30 @@
-name: Suman DevOps - Full Pipeline
+name: Suman First Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-
   build:
-    name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Build step
-        run: echo "Building the application..."
+      - name: Say Hello
+        run: echo "Build successful!"
 
   test:
-    name: Test
     runs-on: ubuntu-latest
-    needs: build              # Runs AFTER build completes
+    needs: build
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Run tests
-        run: echo "Running tests..."
+      - name: Run Test
+        run: echo "Tests passed!"
 
   deploy:
-    name: Deploy
     runs-on: ubuntu-latest
-    needs: test               # Runs AFTER test completes
+    needs: test
     steps:
-      - uses: actions/checkout@v3
-
       - name: Deploy
-        run: echo "Deploying to server..."
+        run: echo "Deployed successfully!"
