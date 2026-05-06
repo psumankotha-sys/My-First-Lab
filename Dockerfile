@@ -14,4 +14,4 @@ WORKDIR /app
 COPY . .
 
 # Command to run when container starts
-CMD ["echo", "Suman DevOps Container is running!"]
+CMD ["sh", "-c", "echo 'running'; sleep infinity"]
