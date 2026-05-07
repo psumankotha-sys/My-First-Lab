@@ -1,17 +1,11 @@
-# Base image - lightweight Linux
-FROM ubuntu:22.04
+FROM nginx:alpine
 
-# Who made this
-LABEL maintainer="psumankotha-sys"
+# Remove default nginx page
+RUN rm -rf /usr/share/nginx/html/*
 
-# Update packages
-RUN apt-get update && apt-get install -y curl
+# Create custom HTML page
+RUN echo '<html><head><title>Suman DevOps</title></head><body style="font-family:Arial; text-align:center; padding:50px; background:#1a1a2e;"><h1 style="color:#00d4ff">Suman DevOps</h1><p style="color:white">Welcome to Docker + DevOps Project</p></body></html>' > /usr/share/nginx/html/index.html
 
-# Create a working directory
-WORKDIR /app
+EXPOSE 80
 
-# Copy all files from your project into container
-COPY . .
-
-# Command to run when container starts
-CMD ["sh", "-c", "echo 'running'; sleep infinity"]
+CMD ["nginx", "-g", "daemon off;"]
