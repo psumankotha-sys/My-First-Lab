@@ -1,19 +1,49 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: suman-deployment
+  name: suman-devops-deployment
+
 spec:
   replicas: 2
+
   selector:
     matchLabels:
-      app: suman-app
+      app: suman-devops
+
   template:
     metadata:
       labels:
-        app: suman-app
+        app: suman-devops
+
     spec:
       containers:
-      - name: suman-app
-        image: sumankotha/suman-devops:latest
+      - name: suman-devops-container
+        image: sumankotha/suman-devops:v2
+
         ports:
         - containerPort: 80
+
+        env:
+        - name: APP_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: suman-config
+              key: APP_NAME
+
+        - name: ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: suman-config
+              key: ENVIRONMENT
+
+        - name: USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: suman-secret
+              key: USERNAME
+
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: suman-secret
+              key: PASSWORD

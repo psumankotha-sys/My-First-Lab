@@ -1,11 +1,16 @@
 apiVersion: v1
 kind: Service
+
 metadata:
-  name: suman-service
+  name: suman-devops-service
+
 spec:
   selector:
-    app: suman-app
+    app: suman-devops
+
   ports:
-  - port: 80
+  - protocol: TCP
+    port: 80
     targetPort: 80
+
   type: NodePort
