@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: suman-config
-data:
-  APP_NAME: "Suman DevOps"
-  ENVIRONMENT: "Production"
-  COMPANY: "Suman Technologies"
