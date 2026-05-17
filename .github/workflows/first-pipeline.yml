@@ -47,13 +47,46 @@ jobs:
       - name: Push to Docker Hub
         run: docker push sumankotha/suman-devops:latest
 
-  deploy:
-    name: Deploy
+  kubernetes-deploy:
+    name: Kubernetes Deploy
     runs-on: ubuntu-latest
     needs: docker
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Deploy
-        run: echo "Image deployed from Docker Hub successfully!"
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+
+      - name: Verify kubectl installed
+        run: kubectl version --client
+
+      - name: Validate K8s Manifests
+        run: |
+          echo "Validating Kubernetes manifest files..."
+          kubectl apply --dry-run=client -f deployment.yml
+          kubectl apply --dry-run=client -f service.yml
+          kubectl apply --dry-run=client -f configmap.yml
+          echo "All manifests are valid!"
+
+      - name: Simulate Deployment
+        run: |
+          echo "=========================================="
+          echo "  Suman DevOps - Kubernetes Deploy"
+          echo "=========================================="
+          echo "Image: sumankotha/suman-devops:latest"
+          echo "Deploying to: minikube cluster"
+          echo "Replicas: 2"
+          echo "Status: Deployment successful!"
+          echo "=========================================="
+
+      - name: Show K8s Files
+        run: |
+          echo "--- deployment.yml ---"
+          cat deployment.yml
+          echo "--- service.yml ---"
+          cat service.yml
+          echo "--- configmap.yml ---"
+          cat configmap.yml
