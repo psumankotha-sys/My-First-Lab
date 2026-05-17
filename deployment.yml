@@ -17,3 +17,5 @@ spec:
         image: sumankotha/suman-devops:latest
         ports:
         - containerPort: 80
+
+##echo "Deployment created successfully"
