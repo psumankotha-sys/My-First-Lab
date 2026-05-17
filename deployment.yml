@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: suman-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: suman-app
+  template:
+    metadata:
+      labels:
+        app: suman-app
+    spec:
+      containers:
+      - name: suman-app
+        image: sumankotha/suman-devops:latest
+        ports:
+        - containerPort: 80
