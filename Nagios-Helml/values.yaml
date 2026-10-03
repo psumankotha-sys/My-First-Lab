@@ -1,0 +1,8 @@
+nagios:
+  adminPassword: "AdminPassword123!"
+
+# Define custom monitoring checks inside Nagios
+services:
+  jenkins_check:
+    service_description: "Jenkins Health Check"
+    check_command: "check_http!jenkins.jenkins.svc.cluster.local!8080"
