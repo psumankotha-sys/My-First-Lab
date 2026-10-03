@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/YOUR-USERNAME/YOUR-NAGIOS-REPO.git'
+            }
+        }
+
+        stage('Deploy Nagios via Helm') {
+            steps {
+                bat '''
+                    @echo off
+                    REM Ensure Helm repository is added
+                    helm repo add cetic https://cetic.github.io/helm-charts
+                    helm repo update
+
+                    REM Create namespace if it does not exist
+                    kubectl create namespace nagios --dry-run=client -o yaml | kubectl apply -f -
+
+                    REM Upgrade or install Nagios using the values.yaml from Git
+                    helm upgrade --install nagios cetic/nagios --namespace nagios -f values.yaml
+                '''
+            }
+        }
+    }
+}
